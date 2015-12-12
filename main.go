@@ -64,31 +64,39 @@ func selectSortType() (sortType int) {
 
 func showSort(alg int) {
 	size := inputInt("size")
-	result := generateArray(size)
+	unsorted := generateArray(size)
 	fmt.Println()
 
 	sortType := selectSortType()
 
 	fmt.Println()
 	fmt.Println("Original Array:")
-	fmt.Println(result)
+	fmt.Println(unsorted)
 	fmt.Println()
 
-	if alg == QUICK {
-		result = QuickSort(result, sortType)
-	} else if alg == BUBBLE {
-		BubbleSort(result, sortType)
-	} else {
-		panic("Invalid sort algorithm")
-	}
+	sorted := doSort(unsorted, alg, sortType)
 
 	fmt.Println("Sorted Array:")
-	fmt.Println(result)
+	fmt.Println(sorted)
+}
+
+func doSort(result []int, alg int, sortType int) []int {
+	switch alg {
+	case QUICK:
+		result = QuickSort(result, sortType)
+		break
+	case BUBBLE:
+		BubbleSort(result, sortType)
+		break
+	default:
+		panic("Invalid sort algorithm")
+	}
+	return result
 }
 
 func generateArray(size int) []int {
 	result := make([]int, size)
-	r := rand.New(rand.NewSource(int64(size)))
+	r := rand.New(rand.NewSource(int64(size) + 1000))
 	for i := 0; i < len(result); i++ {
 		result[i] = r.Intn(size)
 	}
