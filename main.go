@@ -9,8 +9,8 @@ const (
 	ASC  = 1
 	DESC = 2
 
-	BUBBLE = 3
-	QUICK  = 4
+	BUBBLE = 1
+	QUICK  = 2
 )
 
 func main() {
@@ -20,10 +20,7 @@ func main() {
 		showFibonacci()
 		break
 	case 2:
-		showSort(BUBBLE)
-		break
-	case 3:
-		showSort(QUICK)
+		showSort()
 		break
 	default:
 		panic("Invalid mode specified")
@@ -31,10 +28,9 @@ func main() {
 }
 
 func selectMode() (mode int) {
-	fmt.Println("Please select one:")
+	fmt.Println("Please select mode:")
 	fmt.Println("1: Fibonacci")
-	fmt.Println("2: Bubble Sort")
-	fmt.Println("3: Quick Sort")
+	fmt.Println("2: Sort")
 	fmt.Println()
 
 	mode = inputInt("selection")
@@ -53,23 +49,33 @@ func inputInt(verb string) int {
 }
 
 func selectSortType() (sortType int) {
-	fmt.Println("Please select one:")
+	fmt.Println("Please select sort direction:")
 	fmt.Printf("%d: Ascending\n", ASC)
 	fmt.Printf("%d: Descending\n", DESC)
 	fmt.Println()
 
-	sortType = inputInt("selection")
+	sortType = inputInt("sort direction")
 	return
 }
 
-func showSort(alg int) {
+func selectSortAlgorithm() (alg int) {
+	fmt.Println("Please select sort algorithm:")
+	fmt.Printf("%d: Bubble Sort\n", BUBBLE)
+	fmt.Printf("%d: Quick Sort\n", QUICK)
+	fmt.Println()
+
+	alg = inputInt("algorithm")
+	return
+}
+
+func showSort() {
+	alg := selectSortAlgorithm()
+	sortType := selectSortType()
+
 	size := inputInt("size")
 	unsorted := generateArray(size)
 	fmt.Println()
 
-	sortType := selectSortType()
-
-	fmt.Println()
 	fmt.Println("Original Array:")
 	fmt.Println(unsorted)
 	fmt.Println()
@@ -96,7 +102,7 @@ func doSort(result []int, alg int, sortType int) []int {
 
 func generateArray(size int) []int {
 	result := make([]int, size)
-	r := rand.New(rand.NewSource(int64(size) + 1000))
+	r := rand.New(rand.NewSource(int64(size)))
 	for i := 0; i < len(result); i++ {
 		result[i] = r.Intn(size)
 	}
