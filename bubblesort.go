@@ -1,10 +1,5 @@
 package main
 
-const (
-	ASC = iota
-	DESC
-)
-
 func swap(unsorted []int, i int, j int) {
 	temp := unsorted[i]
 	unsorted[i] = unsorted[j]

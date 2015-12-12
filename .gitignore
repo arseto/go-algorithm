@@ -23,3 +23,6 @@ _testmain.go
 *.test
 *.prof
 go-algorithm
+
+# VIM editor
+*.swp
