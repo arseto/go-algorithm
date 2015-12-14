@@ -11,13 +11,16 @@ const (
 
 	BUBBLE = 1
 	QUICK  = 2
+
+	FIBONACCI = 1
+	FACTORIAL = 2
 )
 
 func main() {
 	mode := selectMode()
 	switch mode {
 	case 1:
-		showFibonacci()
+		showSeries()
 		break
 	case 2:
 		showSort()
@@ -27,9 +30,41 @@ func main() {
 	}
 }
 
+func showSeries() {
+	mode := selectSeries()
+	switch mode {
+	case FIBONACCI:
+		showFibonacci()
+	case FACTORIAL:
+		showFactorial()
+	default:
+		panic("Invalid series specified")
+	}
+}
+
+func selectSeries() (mode int) {
+	fmt.Println("Please select mode:")
+	fmt.Printf("%d: Fibonacci\n", FIBONACCI)
+	fmt.Printf("%d: Factorial\n", FACTORIAL)
+	fmt.Println()
+
+	mode = inputInt("selection")
+	return
+}
+
+func showFactorial() {
+	size := inputInt("size")
+	fmt.Println(GetFactorialSeriesFast(size))
+}
+
+func showFibonacci() {
+	size := inputInt("size")
+	fmt.Println(GetFibonacciSeriesFast(size))
+}
+
 func selectMode() (mode int) {
 	fmt.Println("Please select mode:")
-	fmt.Println("1: Fibonacci")
+	fmt.Println("1: Series")
 	fmt.Println("2: Sort")
 	fmt.Println()
 
@@ -107,9 +142,4 @@ func generateArray(size int) []int {
 		result[i] = r.Intn(size)
 	}
 	return result
-}
-
-func showFibonacci() {
-	size := inputInt("size")
-	fmt.Println(GetFibonacciSeriesFast(size))
 }
