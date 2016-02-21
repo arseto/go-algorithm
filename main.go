@@ -11,6 +11,7 @@ const (
 
 	BUBBLE = 1
 	QUICK  = 2
+	MERGE  = 3
 
 	FIBONACCI = 1
 	FACTORIAL = 2
@@ -97,6 +98,7 @@ func selectSortAlgorithm() (alg int) {
 	fmt.Println("Please select sort algorithm:")
 	fmt.Printf("%d: Bubble Sort\n", BUBBLE)
 	fmt.Printf("%d: Quick Sort\n", QUICK)
+	fmt.Printf("%d: Merge Sort\n", MERGE)
 	fmt.Println()
 
 	alg = inputInt("algorithm")
@@ -129,6 +131,9 @@ func doSort(result []int, alg int, sortType int) []int {
 	case BUBBLE:
 		BubbleSort(result, sortType)
 		break
+	case MERGE:
+		result = MergeSort(result, sortType)
+		break
 	default:
 		panic("Invalid sort algorithm")
 	}
@@ -137,7 +142,7 @@ func doSort(result []int, alg int, sortType int) []int {
 
 func generateArray(size int) []int {
 	result := make([]int, size)
-	r := rand.New(rand.NewSource(int64(size)))
+	r := rand.New(rand.NewSource(int64(size ^ 2)))
 	for i := 0; i < len(result); i++ {
 		result[i] = r.Intn(size)
 	}
