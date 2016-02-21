@@ -30,25 +30,32 @@ func MergeSort(unsorted []int, sortType int) []int {
 func compareAndMerge(first []int, second []int, sortType int) []int {
 	result := make([]int, len(first)+len(second))
 	firstIndex, secondIndex := 0, 0
+	flag := 0
 
 	for resultIndex := 0; resultIndex < len(result); resultIndex++ {
 		if firstIndex >= len(first) {
-			result[resultIndex] = second[secondIndex]
-			secondIndex++
-			continue
-		}
-		if secondIndex >= len(second) {
-			result[resultIndex] = first[firstIndex]
-			firstIndex++
-			continue
-		}
-		comparison := getComparison(first[firstIndex], second[secondIndex], sortType)
-		if comparison {
-			result[resultIndex] = first[firstIndex]
-			firstIndex++
+			flag = 2
+		} else if secondIndex >= len(second) {
+			flag = 1
 		} else {
+			comparison := getComparison(first[firstIndex], second[secondIndex], sortType)
+			if comparison {
+				flag = 1
+			} else {
+				flag = 2
+			}
+		}
+		switch flag {
+		case 1:
+			result[resultIndex] = first[firstIndex]
+			firstIndex++
+			break
+		case 2:
 			result[resultIndex] = second[secondIndex]
 			secondIndex++
+			break
+		default:
+			panic("Unexpected merge condition")
 		}
 	}
 
